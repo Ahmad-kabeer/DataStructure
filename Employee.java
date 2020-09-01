@@ -4,8 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 
-//ArrayList
+//SingleLinkedList
 
 public class Employee {
     private String FirstName;
@@ -66,38 +67,95 @@ public class Employee {
                 '}';
     }
 }
+class EmployeeNode{
+    private Employee employee;
+    private EmployeeNode next;
 
-class Play{
-    public static void main(String[] arg ){
-        List<Employee> employeeList=new ArrayList<>();
-        employeeList.add(new Employee("ahmad1","kabeer1",101));
-        employeeList.add(new Employee("ahmad2","kabeer2",102));
-        employeeList.add(new Employee("ahmad3","kabeer3",103));
-        employeeList.add(new Employee("ahmad4","kabeer4",104));
-        employeeList.add(new Employee("ahmad5","kabeer5",105));
+    public EmployeeNode(Employee employee) {
+        this.employee = employee;
+    }
 
-//        employeeList.forEach(employee -> System.out.println(employee));
+    public Employee getEmployee() {
+        return employee;
+    }
 
-//        employeeList.add(new Employee("ahmad6","kabeer6",106));
-//        employeeList.forEach(employee -> System.out.println(employee));
-//
-//        System.out.println(employeeList.isEmpty());
-//        System.out.println(employeeList.size());
-//
-//        employeeList.add(3,new Employee("ahmad33","kabeer33",1033));
-//        employeeList.forEach(employee -> System.out.println(employee));
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
-//        Object[] employeObjects = employeeList.toArray();
-//        for (Object i:employeObjects) {
-//            System.out.println(i);
-//        }
+    public EmployeeNode getNext() {
+        return next;
+    }
 
-        //System.out.println(employeeList.contains(new Employee("ahmad3","kabeer3",103)));
-        //System.out.println(employeeList.indexOf(new Employee("ahmad3","kabeer3",103)));
-        employeeList.remove(2);
-        employeeList.forEach(employee -> System.out.println(employee));
+    public void setNext(EmployeeNode next) {
+        this.next = next;
+    }
+    public String toString() {
+        return employee.toString();
     }
 }
 
+class EmployeeLinkedList{
+    private EmployeeNode head;
+    private int size;
+    public void AddtoFront(Employee employee){
+        EmployeeNode node=new EmployeeNode(employee);
+        node.setNext(head);
+        head=node;
+        size++;
+    }
+
+    public int getSize() {
+        return size;
+    }
+    public boolean IsEmpty(){
+        return head==null;
+    }
+    public EmployeeNode RemovefromFront(){
+        if(IsEmpty()){
+            return null;
+        }
+        EmployeeNode removenode=head;
+        head=head.getNext();
+        size--;
+        removenode.setNext(null);
+        return removenode;
+    }
+
+    public void PrintList(){
+        EmployeeNode current=head;
+        System.out.print("HEAD ->");
+        while (current !=null){
+            System.out.println(current);
+            System.out.println(" -> ");
+            current=current.getNext();
+        }
+        System.out.println("null");
+    }
+
+}
+
+class Play{
+    public static void main(String[] arg ){
+        Employee e0=new Employee("ahmad0","kabeer0",100);
+        Employee e1=new Employee("ahmad1","kabeer1",101);
+        Employee e2=new Employee("ahmad2","kabeer2",102);
+        Employee e3=new Employee("ahmad3","kabeer3",103);
+        Employee e4=new Employee("ahmad4","kabeer4",104);
+
+        EmployeeLinkedList list=new EmployeeLinkedList();
+        list.AddtoFront(e0);
+        list.AddtoFront(e1);
+        list.AddtoFront(e2);
+        list.AddtoFront(e3);
+        list.AddtoFront(e4);
+        list.PrintList();
+        System.out.println(list.getSize());
+        System.out.println(list.IsEmpty());
+        list.RemovefromFront();
+        System.out.println(list.getSize());
+        list.PrintList();
+    }
+}
 
 

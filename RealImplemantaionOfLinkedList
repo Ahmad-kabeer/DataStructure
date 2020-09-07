@@ -1,0 +1,165 @@
+package com.company;
+
+class Node {
+    private int data;
+    private Node Next;
+
+    public Node(int data, Node next) {
+        this.data = data;
+        Next = next;
+    }
+
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
+
+    public Node getNext() {
+        return Next;
+    }
+
+    public void setNext(Node next) {
+        Next = next;
+    }
+}
+
+class Linkedl{
+    private int size;
+    private Node start;
+    public boolean IsEmpty(){
+        return start==null;
+    }
+    public int GetlistSize(){
+        return size;
+    }
+    public void ViewList(){
+        Node t;
+        if(IsEmpty()){
+            System.out.println("List is Empty");
+        }
+        else{
+            t=start;
+            for (int i = 1; i <=size ; i++) {
+                System.out.print(" "+ t.getData());
+                t=t.getNext();
+            }
+        }
+    }
+    public void InsertAtFirst(int val){
+        Node node=new Node(val,start);
+        start=node;
+        size++;
+    }
+    public void InsertAtLast(int val){
+
+        Node node=new Node(val,null);
+        Node t=start;
+        if(t==null){
+            start=node;
+        }
+        else {
+            while (t.getNext()!=null){
+                t=t.getNext();
+            }
+            t.setNext(node);
+        }
+        size++;
+    }
+    public void InsertAtPosition(int val,int position){
+        if(position==1){
+            InsertAtFirst(val);
+        }
+        else if(position==size+1){
+            InsertAtLast(val);
+        }
+        else if(position>1 && position<=size){
+            Node n=new Node(val,null);
+            Node t=start;
+            for (int i = 1; i <position-1 ; i++) {
+                t=t.getNext();
+            }
+            n.setNext(t.getNext());
+            t.setNext(n);
+            size++;
+        }
+        else {
+            System.out.println("insertion at" + position + "  is not possible");
+        }
+    }
+    public void DeleteAtFirst(){
+        if(start==null){
+            return;
+        }
+        else {
+            start=start.getNext();
+            size--;
+        }
+
+    }
+    public void DeleteAtLast(){
+        Node t=start;
+        if(start==null){
+            return;
+        }
+        else if(size==1){
+            start=null;
+            size--;
+        }
+        else {
+            for (int i = 1; i < size-1; i++) {
+                t=t.getNext();
+            }
+            t.setNext(null);
+            size--;
+        }
+    }
+    public void DeleteAtPosition(int position){
+        if (start == null||position<1||position>size) {
+            return;
+        }
+        else if (position==1){
+            DeleteAtFirst();
+        }
+        else if(position==size){
+            DeleteAtLast();
+        }
+        else {
+            Node t,t1;
+            t=start;
+            for (int i = 1; i <position-1 ; i++) {
+                t=t.getNext();
+            }
+            t1=t.getNext();
+            t.setNext(t1.getNext());
+            size--;
+        }
+    }
+}
+
+class Run{
+    public static void main(String[] arg){
+        Linkedl list=new Linkedl();
+//        System.out.println(list.GetlistSize());
+//        list.InsertAtFirst(12);
+//        list.InsertAtFirst(13);
+//        list.InsertAtFirst(14);
+//        System.out.println(list.IsEmpty());
+//        System.out.println(list.GetlistSize());
+//        list.ViewList();
+        list.InsertAtFirst(10);
+        list.InsertAtFirst(11);
+        list.InsertAtFirst(12);
+        list.InsertAtLast(9);
+        list.InsertAtFirst(13);
+        list.InsertAtFirst(14);
+        list.InsertAtPosition(101,3);
+        list.DeleteAtFirst();
+        list.DeleteAtLast();
+        list.DeleteAtPosition(3);
+        list.ViewList();
+        System.out.println("\n"+list.GetlistSize());
+    }
+}
